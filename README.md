@@ -1,5 +1,7 @@
 # vscode-snippets-viewer
 Snippets Viewer for Visual Studio Code
+[Visual Studio Marketplace](https://marketplace.visualstudio.com/items?itemName=shilim.vscode-snippets-viewer)
+
 ## Auto Loading Snippets From Expansion
 You can easily view all extended code snippets from the sidebar<br/>
 ![list](img/doc1.png)

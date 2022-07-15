@@ -1,6 +1,6 @@
 {
-  "name": "snippets-viewer",
-  "displayName": "snippets-viewer",
+  "name": "vscode-snippets-viewer",
+  "displayName": "Snippets Viewer",
   "description": "代码段查看器",
   "version": "0.0.1",
   "publisher": "shilim",
