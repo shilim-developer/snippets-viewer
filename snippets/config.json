@@ -1,0 +1,11 @@
+[
+  {
+    "name": "custom",
+    "children": [
+      {
+        "name": "vue",
+        "children": "custom/vue.json"
+      }
+    ]
+  }
+]

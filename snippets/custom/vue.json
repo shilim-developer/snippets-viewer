@@ -1,0 +1,33 @@
+{
+  "Component vue": {
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "  <div></div>",
+      "</template>",
+      "",
+      "<script>",
+      "export default {",
+      "  data() {",
+      "    return {};",
+      "  },",
+      "  methods: {},",
+      "  created() {},",
+      "};",
+      "</script>",
+      "",
+      "<style scoped lang=\"less\"></style>"
+    ],
+    "description": "Component vue"
+  },
+  "Layout Flex-Column": {
+    "prefix": "d-flex-column",
+    "body": ["<div class=\"d-flex flex-column\">$1</div>"],
+    "description": "Layout Flex-Column"
+  },
+  "Layout Flex-Row": {
+    "prefix": "d-flex-row",
+    "body": ["<div class=\"d-flex flex-row\"></div>"],
+    "description": "Layout Flex-Row"
+  }
+}
