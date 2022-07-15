@@ -2,6 +2,7 @@
 Snippets Viewer for Visual Studio Code
 ## Auto Loading Snippets From Expansion
 You can easily view all extended code snippets from the sidebar
+![list](img/doc1.png)
 ## Usage
 ### Insert Snippets
 Click code snippet

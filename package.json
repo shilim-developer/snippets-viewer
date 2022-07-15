@@ -67,7 +67,7 @@
     }
   },
   "scripts": {
-    "package": "vsce package",
+    "package": "vsce package --no-yarn",
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
