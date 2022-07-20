@@ -19,6 +19,7 @@ import {
   window,
   workspace,
 } from "vscode";
+import { Environment } from "./environmentPath";
 import { SnippetJSON } from "./models/SnippetJson";
 import { SnippetManifest } from "./models/SnippetManifest";
 import { Tree, TreeChild } from "./models/Tree";
@@ -35,7 +36,11 @@ export class TreeItemNode extends TreeItem {
     public collapsibleState: TreeItemCollapsibleState
   ) {
     super(label, collapsibleState);
-    this.iconPath = Uri.file(join(__filename, "..", "..", icon));
+    if (icon.includes("code.svg")) {
+      this.iconPath = Uri.file(join(__filename, "..", "..", icon));
+    } else {
+      this.resourceUri = Uri.parse(icon);
+    }
     // command: 为每项添加点击事件的命令
     if (this.collapsibleState === TreeItemCollapsibleState.None) {
       this.command = {
@@ -130,7 +135,7 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
         customConfigList.forEach((item: Tree) => {
           this.treeList.push({
             name: item.name,
-            icon: "img/folder_type_plugin.svg",
+            icon: ".github",
             children: item.children.map((snippetItem: TreeChild) => {
               // 加入自定义代码段
               let json: { [key: string]: SnippetJSON } = {};
@@ -143,7 +148,7 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
               this.addCustomSnippets(snippetItem.name, json);
               return {
                 name: snippetItem.name,
-                icon: "img/folder_type_src.svg",
+                icon: "src",
                 children: join(customConfig.customUrl, snippetItem.children),
               };
             }),
@@ -155,19 +160,36 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
       }
     }
 
+    // 加载用户自定义代码段
+    const environment = new Environment(this.context);
+    try {
+      this.treeList.push({
+        name: "user-snippets",
+        icon: "vscode",
+        children: fs.readdirSync(environment.snippetsFolder).map((fileName) => {
+          return {
+            name: fileName.substring(0, fileName.lastIndexOf(".")),
+            icon: "src",
+            children: path.join(environment.snippetsFolder, fileName),
+          };
+        }),
+      });
+    } catch (error) {}
+
     // 加载扩展代码段
     let extensionsList = extensions.all;
+    // console.log(extensionsList);
     extensionsList = extensionsList.filter(
       (item) => !!item?.packageJSON?.contributes?.snippets
     );
     extensionsList.forEach((item) => {
       this.treeList.push({
         name: item?.packageJSON?.name,
-        icon: "img/folder_type_plugin.svg",
+        icon: "plugin",
         children: item.packageJSON.contributes.snippets.map(
           (snippetItem: SnippetManifest) => ({
             name: snippetItem.language,
-            icon: "img/folder_type_src.svg",
+            icon: "src",
             children: path.join(item?.extensionPath || "", snippetItem.path),
           })
         ),
@@ -180,7 +202,6 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
     this._onDidChangeTreeData.event;
 
   getTreeItem(element: TreeItemNode): TreeItem | Thenable<TreeItem> {
-    console.log("获取节点", element.label);
     return element;
   }
 
@@ -243,8 +264,7 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
   refresh(): void {
     this.initList();
     // this.treeList = [];
-    console.log(this.treeList);
-
+    // console.log(this.treeList);
     this._onDidChangeTreeData.fire();
   }
 
