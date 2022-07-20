@@ -68,6 +68,7 @@
   },
   "scripts": {
     "package": "vsce package --no-yarn",
+    "changelog": "conventional-changelog -p normal -i CHANGELOG.md -s -r 0",
     "vscode:prepublish": "yarn run compile",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
