@@ -3,13 +3,13 @@ import { TreeItemData } from "../models/TreeItemData";
 
 export class TreeItemNode extends TreeItem {
   constructor(public readonly treeNodeData: TreeItemData) {
-    const { name, icon, body, isOutCustomRoot, disabled } = treeNodeData;
     super(
-      name,
+      treeNodeData.name,
       !!treeNodeData.children
         ? TreeItemCollapsibleState.Collapsed
         : TreeItemCollapsibleState.None
     );
+    const { name, icon, body, isOutCustomRoot, disabled } = treeNodeData;
 
     // init icon
     if (icon.includes("code.svg")) {
