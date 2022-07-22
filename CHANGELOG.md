@@ -1,3 +1,25 @@
+## [0.0.2](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.1...v0.0.2) (2022-07-22)
+
+
+### ✨ Features
+
+*  add disable snippets ([f1ac9e9](https://github.com/shilim-developer/snippets-viewer/commit/f1ac9e94c147a1b747b6f4312cbfe8cdf5f89f43)) by 雨铃琳--忧 1251314045@qq.com
+*  add user custom snippets ([9a5625a](https://github.com/shilim-developer/snippets-viewer/commit/9a5625acd67174290192ed52fe5f38711ac31d4b)) by 雨铃琳--忧 1251314045@qq.com
+
+### 📘 Documents
+
+*  add changelog ([70e3e32](https://github.com/shilim-developer/snippets-viewer/commit/70e3e326f297b5c9c434351bdb3c07a8da5e6c25)) by 雨铃琳--忧 1251314045@qq.com
+
+### 🧱 Build
+
+*  release 0.0.2, closes [#1](https://github.com/shilim-developer/snippets-viewer/issues/1) ([1524d28](https://github.com/shilim-developer/snippets-viewer/commit/1524d2821a6305f9898a87b9a2c35eef77ea2c9c)) by 雨铃琳--忧 1251314045@qq.com
+
+### 🛠 Chores
+
+*  add changelog script in package.json ([1a36e60](https://github.com/shilim-developer/snippets-viewer/commit/1a36e608896617b963a547710098cc86ff239e87)) by 雨铃琳--忧 1251314045@qq.com
+
+
+
 ## [0.0.1](https://github.com/shilim-developer/snippets-viewer/compare/d51f701c604d0a8536bb7a7e92120f21410c86f9...v0.0.1) (2022-07-15)
 
 
