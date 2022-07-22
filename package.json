@@ -27,6 +27,16 @@
         "command": "snippets-viewer.refresh",
         "title": "Refresh List",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "snippets-viewer.disableSnippets",
+        "title": "Disable Snippets",
+        "icon": "$(circle-slash)"
+      },
+      {
+        "command": "snippets-viewer.enableSnippets",
+        "title": "Enable Snippets",
+        "icon": "$(mail-reply)"
       }
     ],
     "viewsContainers": {
@@ -52,6 +62,18 @@
           "command": "snippets-viewer.refresh",
           "when": "view == plugin-view",
           "group": "navigation"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "snippets-viewer.disableSnippets",
+          "when": "view == plugin-view && viewItem == disableSnippets",
+          "group": "inline"
+        },
+        {
+          "command": "snippets-viewer.enableSnippets",
+          "when": "view == plugin-view && viewItem == enableSnippets",
+          "group": "inline"
         }
       ]
     },

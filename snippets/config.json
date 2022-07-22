@@ -4,8 +4,10 @@
     "children": [
       {
         "name": "vue",
-        "children": "custom/vue.json"
+        "children": "custom/vue.json",
+        "disabled": true
       }
-    ]
+    ],
+    "disabled": true
   }
 ]
