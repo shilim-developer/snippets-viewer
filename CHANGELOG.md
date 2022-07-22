@@ -6,9 +6,14 @@
 *  add disable snippets ([f1ac9e9](https://github.com/shilim-developer/snippets-viewer/commit/f1ac9e94c147a1b747b6f4312cbfe8cdf5f89f43)) by 雨铃琳--忧 1251314045@qq.com
 *  add user custom snippets ([9a5625a](https://github.com/shilim-developer/snippets-viewer/commit/9a5625acd67174290192ed52fe5f38711ac31d4b)) by 雨铃琳--忧 1251314045@qq.com
 
+### 🐞 Bug Fixed
+
+*  constructor call must be the first statement in a constructor ([1444ecf](https://github.com/shilim-developer/snippets-viewer/commit/1444ecf88f2cb2fbb3f6a3f53aaaa6afd00450bd)) by 雨铃琳--忧 1251314045@qq.com
+
 ### 📘 Documents
 
 *  add changelog ([70e3e32](https://github.com/shilim-developer/snippets-viewer/commit/70e3e326f297b5c9c434351bdb3c07a8da5e6c25)) by 雨铃琳--忧 1251314045@qq.com
+*  update changelog ([2712de6](https://github.com/shilim-developer/snippets-viewer/commit/2712de6f338ed0f1ff2b9735850cd11b23e574d2)) by 雨铃琳--忧 1251314045@qq.com
 
 ### 🧱 Build
 
