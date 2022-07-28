@@ -63,3 +63,7 @@ config.json template
 ]
 ```
 
+#### Target To Snippets File
+When SnippetViewer.showTargetCodeBtn is True, you can get a button to open the snippets file.
+
+![targetToFile](./img/targetToFile.gif)
