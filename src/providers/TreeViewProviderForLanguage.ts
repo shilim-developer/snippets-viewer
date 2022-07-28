@@ -1,6 +1,6 @@
 import * as fs from "fs";
 import * as JSON5 from "json5";
-import { join } from "path";
+import { join, resolve } from "path";
 import {
   commands,
   CompletionItem,
@@ -135,7 +135,6 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
                 return {
                   name: snippetItem.name,
                   icon: "src",
-                  body: snippetItem.name,
                   expression: `${index}.${childIndex}`,
                   isOutCustomRoot: false,
                   disabled: snippetItem.disabled,
@@ -307,7 +306,7 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
           resultArr = Object.keys(json);
         } catch (error) {
           console.log(error);
-          window.showErrorMessage("Snippets File Error");
+          window.showErrorMessage("代码段文件错误");
         }
         return resultArr.map(
           (key) =>
@@ -416,24 +415,19 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
         JSON.stringify(this.customConfigCacheList, null, 2)
       );
       if (treeNode.disabled) {
-        // 禁用代码段
         this.customDisposableList[treeListIndex]
           .splice(0, this.customDisposableList[treeListIndex].length)
           .forEach((disposable) => {
             disposable.dispose();
           });
       } else {
-        // 启用代码段
         try {
-          const children = treeNodeCache.children as TreeItemData[];
+          const children = treeNode.children as TreeItemData[];
           const disposableList: Disposable[] = [];
           children.forEach((snippetItem: TreeItemData) => {
             const json: { [key: string]: SnippetJSON } =
               FileService.getJSON5File<{ [key: string]: SnippetJSON }>(
-                join(
-                  this.environment.customSnippetsConfigUrl,
-                  snippetItem.children as string
-                ),
+                resolve(snippetItem.children as string),
                 {}
               );
             disposableList.push(this.addCustomSnippets(snippetItem.name, json));

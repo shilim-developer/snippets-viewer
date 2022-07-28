@@ -1,8 +1,8 @@
 {
   "name": "vscode-snippets-viewer",
   "displayName": "Snippets Viewer",
-  "description": "代码段查看器",
-  "version": "0.0.2",
+  "description": "Snippets Viewer",
+  "version": "0.0.3",
   "publisher": "shilim",
   "license": "MIT",
   "engines": {
@@ -29,6 +29,16 @@
         "icon": "$(refresh)"
       },
       {
+        "command": "snippets-viewer.groupByPlugins",
+        "title": "Group By Plugins",
+        "icon": "$(list-tree)"
+      },
+      {
+        "command": "snippets-viewer.groupByLanguage",
+        "title": "Group By Language",
+        "icon": "$(list-tree)"
+      },
+      {
         "command": "snippets-viewer.disableSnippets",
         "title": "Disable Snippets",
         "icon": "$(circle-slash)"
@@ -37,13 +47,18 @@
         "command": "snippets-viewer.enableSnippets",
         "title": "Enable Snippets",
         "icon": "$(mail-reply)"
+      },
+      {
+        "command": "snippets-viewer.targetToFile",
+        "title": "Target Code In File",
+        "icon": "$(gist)"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
           "id": "snippet-viwer",
-          "title": "代码段查看器",
+          "title": "Snippets Viewer",
           "icon": "img/left_icon.svg"
         }
       ]
@@ -52,7 +67,7 @@
       "snippet-viwer": [
         {
           "id": "plugin-view",
-          "name": "扩展目录"
+          "name": "list"
         }
       ]
     },
@@ -61,6 +76,16 @@
         {
           "command": "snippets-viewer.refresh",
           "when": "view == plugin-view",
+          "group": "navigation"
+        },
+        {
+          "command": "snippets-viewer.groupByPlugins",
+          "when": "view == plugin-view && config.SnippetViewer.groupByType == 'language'",
+          "group": "navigation"
+        },
+        {
+          "command": "snippets-viewer.groupByLanguage",
+          "when": "view == plugin-view && config.SnippetViewer.groupByType == 'plugins'",
           "group": "navigation"
         }
       ],
@@ -74,6 +99,11 @@
           "command": "snippets-viewer.enableSnippets",
           "when": "view == plugin-view && viewItem == enableSnippets",
           "group": "inline"
+        },
+        {
+          "command": "snippets-viewer.targetToFile",
+          "when": "view == plugin-view && viewItem == code && config.SnippetViewer.showTargetCodeBtn",
+          "group": "inline"
         }
       ]
     },
@@ -83,7 +113,21 @@
         "SnippetViewer.customUrl": {
           "type": "string",
           "default": "",
-          "description": "自定义配置js路径"
+          "description": "custom snippets url"
+        },
+        "SnippetViewer.groupByType": {
+          "type": "string",
+          "default": "plugins",
+          "enum": [
+            "plugins",
+            "language"
+          ],
+          "description": "groupBy type"
+        },
+        "SnippetViewer.showTargetCodeBtn": {
+          "type": "boolean",
+          "default": false,
+          "description": "control the visibility of the 'targetToFile' button"
         }
       }
     }

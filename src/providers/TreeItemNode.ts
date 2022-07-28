@@ -14,6 +14,7 @@ export class TreeItemNode extends TreeItem {
     // init icon
     if (icon.includes("code.svg")) {
       this.iconPath = icon;
+      this.contextValue = "code";
     } else {
       this.resourceUri = Uri.from({
         scheme: "shilim",

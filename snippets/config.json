@@ -5,9 +5,30 @@
       {
         "name": "vue",
         "children": "custom/vue.json",
-        "disabled": true
+        "disabled": false
+      },
+      {
+        "name": "js",
+        "children": "custom/js.json",
+        "disabled": false
       }
     ],
-    "disabled": true
+    "disabled": false
+  },
+  {
+    "name": "custom2",
+    "children": [
+      {
+        "name": "vue",
+        "children": "custom2/vue.json",
+        "disabled": false
+      },
+      {
+        "name": "js",
+        "children": "custom2/js.json",
+        "disabled": false
+      }
+    ],
+    "disabled": false
   }
 ]

@@ -20,6 +20,48 @@
     ],
     "description": "Component vue"
   },
+  "Component vue2": {
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "  <div></div>",
+      "</template>",
+      "",
+      "<script>",
+      "export default {",
+      "  data() {",
+      "    return {};",
+      "  },",
+      "  methods: {},",
+      "  created() {},",
+      "};",
+      "</script>",
+      "",
+      "<style scoped lang=\"less\"></style>"
+    ],
+    "description": "Component vue"
+  },
+  "Component vue3": {
+    "prefix": "vue",
+    "body": [
+      "<template>",
+      "  <div></div>",
+      "</template>",
+      "",
+      "<script>",
+      "export default {",
+      "  data() {",
+      "    return {};",
+      "  },",
+      "  methods: {},",
+      "  created() {},",
+      "};",
+      "</script>",
+      "",
+      "<style scoped lang=\"less\"></style>"
+    ],
+    "description": "Component vue"
+  },
   "Layout Flex-Column": {
     "prefix": "d-flex-column",
     "body": ["<div class=\"d-flex flex-column\">$1</div>"],
