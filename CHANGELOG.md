@@ -1,3 +1,17 @@
+## [0.0.3](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.2...v0.0.3) (2022-07-28)
+
+
+### ✨ Features
+
+*  add grouping type configuration and 'targetToFile' button display configuration, closes [#2](https://github.com/shilim-developer/snippets-viewer/issues/2) ([af5556c](https://github.com/shilim-developer/snippets-viewer/commit/af5556c7e76c73227cc93dca7d515c5e72583ee8)) by 雨铃琳--忧 1251314045@qq.com
+
+### 📘 Documents
+
+*  add Target To Snippets File doc ([d3ae5a7](https://github.com/shilim-developer/snippets-viewer/commit/d3ae5a762e72390b80888a1c60728f7fcb5b96f8)) by 雨铃琳--忧 1251314045@qq.com
+*  update README.md ([358f520](https://github.com/shilim-developer/snippets-viewer/commit/358f520e83302a68b74a60df5d352964ccfdb2fd)) by 雨铃琳--忧 1251314045@qq.com
+
+
+
 ## [0.0.2](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.1...v0.0.2) (2022-07-22)
 
 
@@ -13,6 +27,7 @@
 ### 📘 Documents
 
 *  add changelog ([70e3e32](https://github.com/shilim-developer/snippets-viewer/commit/70e3e326f297b5c9c434351bdb3c07a8da5e6c25)) by 雨铃琳--忧 1251314045@qq.com
+*  update changelog ([d127c0c](https://github.com/shilim-developer/snippets-viewer/commit/d127c0c25bf7f149a7bb2763f1d09672371a7813)) by 雨铃琳--忧 1251314045@qq.com
 *  update changelog ([2712de6](https://github.com/shilim-developer/snippets-viewer/commit/2712de6f338ed0f1ff2b9735850cd11b23e574d2)) by 雨铃琳--忧 1251314045@qq.com
 
 ### 🧱 Build
