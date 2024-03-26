@@ -1,5 +1,6 @@
 import * as fs from "fs";
 import * as JSON5 from "json5";
+import * as vscode from "vscode";
 import { join } from "path";
 import {
   commands,
@@ -15,15 +16,16 @@ import {
   SnippetString,
   TreeDataProvider,
   TreeItem,
+  TreeItemCollapsibleState,
   Uri,
   window,
 } from "vscode";
-import { Environment, GroupByType } from "../environmentPath";
+import { Environment, GroupByType, ShowType } from "../environmentPath";
 import { SnippetJSON } from "../models/SnippetJson";
 import { SnippetManifest } from "../models/SnippetManifest";
 import { TreeItemData } from "../models/TreeItemData";
 import { TreeItemMergeData } from "../models/TreeItemMergeData";
-import { FileService } from "../service/FileServiece";
+import { FileService } from "../service/FileService";
 import { TreeItemNode } from "./TreeItemNode";
 
 export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
@@ -31,10 +33,13 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
     TreeItemNode | undefined | null | void
   > = new EventEmitter<TreeItemNode | undefined | null | void>();
   private context!: ExtensionContext;
+  private originTreeList: TreeItemData[] = [];
   private treeList: TreeItemData[] = [];
   private customConfigCacheList: TreeItemData[] = [];
   private customDisposableList: Disposable[][] = [];
   private environment!: Environment;
+  private currentLanguage: string | undefined;
+  private expandStatusMap: { [key: string]: TreeItemCollapsibleState } = {};
 
   /**
    * 初始化
@@ -44,7 +49,9 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
   public initialize(context: ExtensionContext): void {
     this.context = context;
     this.environment = new Environment(this.context);
+    this.currentLanguage = window.activeTextEditor?.document.languageId;
     this.initList();
+    this.initTreeList();
   }
 
   /**
@@ -89,11 +96,10 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
   }
 
   /**
-   * 初始化列表
+   * 获取初始化列表
    */
   initList() {
-    this.treeList = [];
-
+    this.originTreeList = [];
     this.customDisposableList.forEach((disposableList) => {
       disposableList.forEach((disposable) => {
         disposable.dispose();
@@ -109,45 +115,53 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
         this.customConfigCacheList = customConfigList;
         customConfigList.forEach((item: TreeItemData, index) => {
           const disposableList: Disposable[] = [];
-          this.treeList.push({
-            name: item.name,
-            icon: ".github",
-            body: item.name,
-            expression: `${index}`,
-            isOutCustomRoot: true,
-            disabled: item.disabled,
-            children: (item.children as TreeItemData[]).map(
-              (snippetItem: TreeItemData, childIndex) => {
-                // 加入自定义代码段
-                const json: { [key: string]: SnippetJSON } =
-                  FileService.getJSON5File<{ [key: string]: SnippetJSON }>(
-                    join(
+          const childrenList = (item.children as TreeItemData[]).filter(
+            (item) =>
+              this.environment.showType === ShowType.followEditor
+                ? item.name === this.currentLanguage
+                : true
+          );
+          if (childrenList.length > 0) {
+            this.originTreeList.push({
+              name: item.name,
+              icon: ".github",
+              body: item.name,
+              expression: `${index}`,
+              isOutCustomRoot: true,
+              disabled: item.disabled,
+              children: childrenList.map(
+                (snippetItem: TreeItemData, childIndex) => {
+                  // 加入自定义代码段
+                  const json: { [key: string]: SnippetJSON } =
+                    FileService.getJSON5File<{ [key: string]: SnippetJSON }>(
+                      join(
+                        this.environment.customSnippetsConfigUrl,
+                        snippetItem.children as string
+                      ),
+                      {}
+                    );
+                  if (!item.disabled) {
+                    disposableList.push(
+                      this.addCustomSnippets(snippetItem.name, json)
+                    );
+                  }
+                  return {
+                    name: snippetItem.name,
+                    icon: "src",
+                    body: snippetItem.name,
+                    expression: `${index}.${childIndex}`,
+                    isOutCustomRoot: false,
+                    disabled: snippetItem.disabled,
+                    children: join(
                       this.environment.customSnippetsConfigUrl,
                       snippetItem.children as string
                     ),
-                    {}
-                  );
-                if (!item.disabled) {
-                  disposableList.push(
-                    this.addCustomSnippets(snippetItem.name, json)
-                  );
+                  };
                 }
-                return {
-                  name: snippetItem.name,
-                  icon: "src",
-                  body: snippetItem.name,
-                  expression: `${index}.${childIndex}`,
-                  isOutCustomRoot: false,
-                  disabled: snippetItem.disabled,
-                  children: join(
-                    this.environment.customSnippetsConfigUrl,
-                    snippetItem.children as string
-                  ),
-                };
-              }
-            ),
-          });
-          this.customDisposableList.push(disposableList);
+              ),
+            });
+            this.customDisposableList.push(disposableList);
+          }
         });
       } catch (error) {
         console.error("自定义配置错误");
@@ -157,26 +171,34 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
 
     // 加载用户自定义代码段
     try {
-      this.treeList.push({
-        name: "user-snippets",
-        icon: "vscode",
-        body: "user-snippets",
-        isOutCustomRoot: false,
-        expression: `${this.treeList.length}`,
-        disabled: false,
-        children: fs
-          .readdirSync(this.environment.snippetsFolder)
-          .map((fileName, fileIndex) => {
+      const childrenList = fs
+        .readdirSync(this.environment.snippetsFolder)
+        .filter((fileName) =>
+          this.environment.showType === ShowType.followEditor
+            ? fileName.substring(0, fileName.lastIndexOf(".")) ===
+              this.currentLanguage
+            : true
+        );
+      if (childrenList.length > 0) {
+        this.originTreeList.push({
+          name: "user-snippets",
+          icon: "vscode",
+          body: "user-snippets",
+          isOutCustomRoot: false,
+          expression: `${this.originTreeList.length}`,
+          disabled: false,
+          children: childrenList.map((fileName, fileIndex) => {
             return {
               name: fileName.substring(0, fileName.lastIndexOf(".")),
               icon: "src",
               isOutCustomRoot: false,
               disabled: false,
-              expression: `${this.treeList.length}.${fileIndex}`,
+              expression: `${this.originTreeList.length}.${fileIndex}`,
               children: join(this.environment.snippetsFolder, fileName),
             };
           }),
-      });
+        });
+      }
     } catch (error) {}
 
     // 加载扩展代码段
@@ -186,36 +208,41 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
       (item) => !!item?.packageJSON?.contributes?.snippets
     );
     extensionsList.forEach((item) => {
-      this.treeList.push({
-        name: item?.packageJSON?.name,
-        icon: "plugin",
-        body: item?.packageJSON?.name,
-        isOutCustomRoot: false,
-        disabled: false,
-        expression: `${this.treeList.length}`,
-        children: item.packageJSON.contributes.snippets.map(
-          (snippetItem: SnippetManifest, snippetIndex: number) => ({
-            name: snippetItem.language,
-            icon: "src",
-            body: snippetItem.language,
-            isOutCustomRoot: false,
-            disabled: false,
-            expression: `${this.treeList.length}.${snippetIndex}`,
-            children: join(item?.extensionPath || "", snippetItem.path),
-          })
-        ),
-      });
+      const childrenList = item.packageJSON.contributes.snippets.filter(
+        (snippetItem: SnippetManifest) =>
+          this.environment.showType === ShowType.followEditor
+            ? snippetItem.language === this.currentLanguage
+            : true
+      );
+      if (childrenList.length > 0) {
+        this.originTreeList.push({
+          name: item?.packageJSON?.name,
+          icon: "plugin",
+          body: item?.packageJSON?.name,
+          isOutCustomRoot: false,
+          disabled: false,
+          expression: `${this.originTreeList.length}`,
+          children: item.packageJSON.contributes.snippets.map(
+            (snippetItem: SnippetManifest, snippetIndex: number) => ({
+              name: snippetItem.language,
+              icon: "src",
+              body: snippetItem.language,
+              isOutCustomRoot: false,
+              disabled: false,
+              expression: `${this.originTreeList.length}.${snippetIndex}`,
+              children: join(item?.extensionPath || "", snippetItem.path),
+            })
+          ),
+        });
+      }
     });
-    if (this.environment.groupByType === GroupByType.language) {
-      this.initListGroupByLanguage();
-    }
   }
 
   /**
    * 初始化通过语言排序列表
    */
   initListGroupByLanguage(): void {
-    const tempList: TreeItemMergeData[] = this.treeList
+    const tempList: TreeItemMergeData[] = this.originTreeList
       .map((item) => {
         return (item.children as TreeItemData[]).map((child) => ({
           ...child,
@@ -262,6 +289,32 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
     }));
   }
 
+  /**
+   * 初始化通过插件排序列表
+   */
+  initListGroupByPlugins() {
+    this.treeList = this.originTreeList;
+  }
+
+  /**
+   * 初始化视图列表
+   */
+  initTreeList() {
+    if (this.environment.groupByType === GroupByType.language) {
+      this.initListGroupByLanguage();
+    } else if (this.environment.groupByType === GroupByType.plugins) {
+      this.initListGroupByPlugins();
+    }
+    console.log(this.treeList);
+  }
+
+  initByLanguage(language: string): void {
+    if (this.currentLanguage !== language) {
+      this.currentLanguage = language;
+      this.refresh();
+    }
+  }
+
   onDidChangeTreeData?:
     | import("vscode").Event<TreeItemNode | undefined | null | void> =
     this._onDidChangeTreeData.event;
@@ -276,7 +329,7 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
     if (element) {
       if (Array.isArray(element.treeNodeData.children)) {
         return element.treeNodeData.children.map((item) => {
-          return new TreeItemNode(item);
+          return new TreeItemNode(item, this.expandStatusMap);
         });
       } else {
         let resultArr: string[] = [];
@@ -311,24 +364,27 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
         }
         return resultArr.map(
           (key) =>
-            new TreeItemNode({
-              name: key,
-              icon: this.context.asAbsolutePath(join("img", "code.svg")),
-              isOutCustomRoot: false,
-              disabled: false,
-              expression: element.treeNodeData.expression,
-              line: json[key].line,
-              body: Array.isArray(json[key].body)
-                ? (json[key].body as string[]).join("\n")
-                : (json[key].body as string),
-              children: "",
-            })
+            new TreeItemNode(
+              {
+                name: key,
+                icon: this.context.asAbsolutePath(join("img", "code.svg")),
+                isOutCustomRoot: false,
+                disabled: false,
+                expression: element.treeNodeData.expression,
+                line: json[key].line,
+                body: Array.isArray(json[key].body)
+                  ? (json[key].body as string[]).join("\n")
+                  : (json[key].body as string),
+                children: "",
+              },
+              this.expandStatusMap
+            )
         );
       }
     } else {
-      // 不包含elment, 根节点
+      // 不包含element, 根节点
       return this.treeList.map((item) => {
-        return new TreeItemNode(item);
+        return new TreeItemNode(item, this.expandStatusMap);
       });
     }
   }
@@ -354,6 +410,13 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
     return treeItemData;
   }
 
+  setExpandStatus(key: string, value: TreeItemCollapsibleState): void {
+    this.expandStatusMap[key] = value;
+  }
+  clearExpandStatus(key: string): void {
+    delete this.expandStatusMap[key];
+  }
+
   /**
    * 代码段点击
    * @param {string} body 代码段内容
@@ -367,10 +430,19 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
   }
 
   /**
+   * 排序列表
+   */
+  public sortList(): void {
+    this.initTreeList();
+    this._onDidChangeTreeData.fire();
+  }
+
+  /**
    * 刷新列表
    */
   public refresh(): void {
     this.initList();
+    this.initTreeList();
     this._onDidChangeTreeData.fire();
   }
 
@@ -380,7 +452,16 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
    */
   public async groupList(type: GroupByType) {
     await this.environment.setGroupByType(type);
-    this.refresh();
+    this.sortList();
+  }
+
+  /**
+   * 根据显示类型显示列表
+   * @param {ShowType} type 显示模式
+   */
+  public async changeShowType(type: ShowType) {
+    await this.environment.setShowType(type);
+    this.sortList();
   }
 
   /**

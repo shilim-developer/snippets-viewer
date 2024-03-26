@@ -6,6 +6,11 @@ export enum GroupByType {
   "language" = "language",
 }
 
+export enum ShowType {
+  "showAll" = "showAll",
+  "followEditor" = "followEditor",
+}
+
 export class Environment {
   public isPortable: boolean = false;
   public userFolder: string = "";
@@ -30,6 +35,10 @@ export class Environment {
     );
   }
 
+  public get showType(): ShowType {
+    return this.customConfig.get<ShowType>("showType") || ShowType.showAll;
+  }
+
   public get showTargetCodeBtn(): boolean {
     return this.customConfig.get<boolean>("showTargetCodeBtn") || false;
   }
@@ -51,5 +60,9 @@ export class Environment {
 
   public setGroupByType(type: GroupByType): Thenable<void> {
     return this.customConfig.update("groupByType", type);
+  }
+
+  public setShowType(type: ShowType): Thenable<void> {
+    return this.customConfig.update("showType", type);
   }
 }

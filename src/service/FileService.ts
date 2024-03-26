@@ -1,5 +1,5 @@
 import * as fs from "fs";
-import * as JSON5 from "JSON5";
+import * as JSON5 from "json5";
 
 export class FileService {
   public static getJSON5File<T>(filePath: string, defaultVal: T): T {

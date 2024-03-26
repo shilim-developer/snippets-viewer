@@ -2,11 +2,16 @@ import { TreeItem, TreeItemCollapsibleState, Uri } from "vscode";
 import { TreeItemData } from "../models/TreeItemData";
 
 export class TreeItemNode extends TreeItem {
-  constructor(public readonly treeNodeData: TreeItemData) {
+  constructor(
+    public readonly treeNodeData: TreeItemData,
+    expandStatusMap: { [key: string]: TreeItemCollapsibleState }
+  ) {
     super(
       treeNodeData.name,
       !!treeNodeData.children
-        ? TreeItemCollapsibleState.Collapsed
+        ? expandStatusMap[treeNodeData.expression || ""]
+          ? expandStatusMap[treeNodeData.expression || ""]
+          : TreeItemCollapsibleState.Collapsed
         : TreeItemCollapsibleState.None
     );
     const { name, icon, body, isOutCustomRoot, disabled } = treeNodeData;
