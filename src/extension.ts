@@ -1,7 +1,7 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
-import { GroupByType } from "./environmentPath";
+import { GroupByType, ShowType } from "./environmentPath";
 import { TreeItemData } from "./models/TreeItemData";
 import { treeItemDecorationProvider } from "./providers/TreeItemDecorationProvider";
 import { treeViewProvider } from "./providers/TreeViewProvider";
@@ -23,7 +23,7 @@ export function activate(context: vscode.ExtensionContext) {
   pluginTreeView.initialize(context, treeViewProvider);
 
   context.subscriptions.push(
-    // vscode.window.registerFileDecorationProvider(treeItemDecorationProvider),
+    vscode.window.registerFileDecorationProvider(treeItemDecorationProvider),
     vscode.window.onDidChangeActiveTextEditor((textEditor) => {
       if (textEditor && textEditor.document.languageId) {
         treeViewProvider.initByLanguage(textEditor.document.languageId);
@@ -40,6 +40,12 @@ export function activate(context: vscode.ExtensionContext) {
     ),
     vscode.commands.registerCommand("snippets-viewer.groupByLanguage", () =>
       treeViewProvider.groupList(GroupByType.language)
+    ),
+    vscode.commands.registerCommand("snippets-viewer.showAll", () =>
+      treeViewProvider.changeShowType(ShowType.showAll)
+    ),
+    vscode.commands.registerCommand("snippets-viewer.followEditor", () =>
+      treeViewProvider.changeShowType(ShowType.followEditor)
     ),
     vscode.commands.registerCommand(
       "snippets-viewer.disableSnippets",

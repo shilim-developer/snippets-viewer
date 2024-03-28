@@ -17,12 +17,20 @@ class PluginTreeView {
     this.treeView = window.createTreeView("plugin-view", {
       treeDataProvider,
     });
+    // let revealQueue = Promise.resolve();
     context.subscriptions.push(
+      treeDataProvider.on("refreshNode", (e: TreeItemNode) => {
+        console.log(
+          "e:",
+          e.collapsibleState === TreeItemCollapsibleState.Expanded
+        );
+        this.treeView.reveal(e, {
+          expand: false,
+        });
+      }),
       // 保存展开状态
       this.treeView.onDidExpandElement((e) => {
         if (e.element.treeNodeData.expression) {
-          console.log(e.element.treeNodeData.expression);
-
           treeDataProvider.setExpandStatus(
             e.element.treeNodeData.expression,
             TreeItemCollapsibleState.Expanded

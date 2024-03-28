@@ -100,12 +100,12 @@
         },
         {
           "command": "snippets-viewer.showAll",
-          "when": "view == plugin-view && config.SnippetViewer.showType == 'showAll'",
+          "when": "view == plugin-view && config.SnippetViewer.showType == 'followEditor'",
           "group": "navigation@2"
         },
         {
           "command": "snippets-viewer.followEditor",
-          "when": "view == plugin-view && config.SnippetViewer.showType == 'followEditor'",
+          "when": "view == plugin-view && config.SnippetViewer.showType == 'showAll'",
           "group": "navigation@2"
         }
       ],
@@ -133,7 +133,7 @@
         "SnippetViewer.customUrl": {
           "type": "string",
           "default": "",
-          "description": "custom snippets url"
+          "description": "absolute custom snippets url"
         },
         "SnippetViewer.relativeCustomUrl": {
           "type": "string",

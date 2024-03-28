@@ -14,6 +14,7 @@ export class TreeItemNode extends TreeItem {
           : TreeItemCollapsibleState.Collapsed
         : TreeItemCollapsibleState.None
     );
+
     const { name, icon, body, isOutCustomRoot, disabled } = treeNodeData;
 
     // init icon

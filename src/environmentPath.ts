@@ -29,6 +29,14 @@ export class Environment {
     return join(this.customSnippetsConfigUrl, "config.json");
   }
 
+  public get relativeCustomSnippetsConfigUrl(): string {
+    return this.customConfig.get<string>("relativeCustomUrl") || "";
+  }
+
+  public get relativeCustomSnippetsConfigJsonUrl(): string {
+    return join(this.relativeCustomSnippetsConfigUrl, "config.json");
+  }
+
   public get groupByType(): GroupByType {
     return (
       this.customConfig.get<GroupByType>("groupByType") || GroupByType.plugins

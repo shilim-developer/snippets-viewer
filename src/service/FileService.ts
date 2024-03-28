@@ -2,6 +2,10 @@ import * as fs from "fs";
 import * as JSON5 from "json5";
 
 export class FileService {
+  public static exists(filePath: string): boolean {
+    return fs.existsSync(filePath);
+  }
+
   public static getJSON5File<T>(filePath: string, defaultVal: T): T {
     let json: T = defaultVal;
     try {
