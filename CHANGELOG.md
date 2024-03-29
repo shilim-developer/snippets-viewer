@@ -1,3 +1,21 @@
+## [0.0.4](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.3...v0.0.4) (2024-03-29)
+
+
+### ✨ Features
+
+*  add show type ([30b3a5d](https://github.com/shilim-developer/snippets-viewer/commit/30b3a5d5c876b56d4357f2590aa95db29e21d424)) by shilim 1251314045@qq.com
+*  finish related snippets only and relative path ([17c6c0c](https://github.com/shilim-developer/snippets-viewer/commit/17c6c0cdac3e31417a8bd18c28c282c75e23d16f)) by shilim 1251314045@qq.com
+
+### 📘 Documents
+
+*  change readme and version ([9a1dfb3](https://github.com/shilim-developer/snippets-viewer/commit/9a1dfb3a3b4ded25c059efc2d9ec88bfae39451d)) by shilim 1251314045@qq.com
+
+### wip
+
+*  develop show type ([a060332](https://github.com/shilim-developer/snippets-viewer/commit/a060332b8137afb4cea290d01265ed2b05363f1d)) by shilim 1251314045@qq.com
+
+
+
 ## [0.0.3](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.2...v0.0.3) (2022-07-28)
 
 
@@ -8,6 +26,7 @@
 ### 📘 Documents
 
 *  add Target To Snippets File doc ([d3ae5a7](https://github.com/shilim-developer/snippets-viewer/commit/d3ae5a762e72390b80888a1c60728f7fcb5b96f8)) by 雨铃琳--忧 1251314045@qq.com
+*  release 0.0.3 ([50075f7](https://github.com/shilim-developer/snippets-viewer/commit/50075f757ba64f0610dc9c71650d4bfa4757b65b)) by 雨铃琳--忧 1251314045@qq.com
 *  update README.md ([358f520](https://github.com/shilim-developer/snippets-viewer/commit/358f520e83302a68b74a60df5d352964ccfdb2fd)) by 雨铃琳--忧 1251314045@qq.com
 
 
