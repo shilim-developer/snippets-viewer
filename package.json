@@ -1,8 +1,8 @@
 {
   "name": "vscode-snippets-viewer",
   "displayName": "Snippets Viewer",
-  "description": "Snippets Viewer",
-  "version": "0.0.3",
+  "description": "Extension snippets and custom snippets viewer",
+  "version": "0.0.4",
   "publisher": "shilim",
   "license": "MIT",
   "engines": {
@@ -191,6 +191,7 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
+    "conventional-changelog-normal": "^1.0.2",
     "json5": "^2.2.1"
   }
 }

@@ -16,11 +16,18 @@ You can easily view all extended code snippets from the sidebar<br/>
 ## Usage
 ### Insert Snippets
 Click code snippet
-### Change GroupByType
-Click the refresh button in the upper right corner
-### Refresh List
-Click the 'Group By xxx' button in the upper right corner<br/>
+### Change ShowType
 Update `User Settings` to config
+Click the 'showAll'|'followEditor' button in the upper right corner
+
+if 'followEditor' is selected, only the snippet for the language corresponding to the activated editor will be displayed
+![followEditorDemo](./img/followEditorDemo.gif)
+### Change GroupByType
+Update `User Settings` to config
+Click the 'Group By xxx' button in the upper right corner<br/>
+
+### Refresh List
+Click the refresh button in the upper right corner
 
 #### Disable/Enable Custom Snippets
 Only support for custom snippets
@@ -31,8 +38,12 @@ The following Visual Studio Code setting is available for the Snippets-Viewer. T
 
 ```javascript
 {
-    // custom snippet folder url
+    // custom absolute snippet folder url,it will query the configuration file you configured
     "SnippetViewer.customUrl":"E:\\snippets",
+    // custom relative snippet folder url,it will query the configuration file in the currently open folder
+    "SnippetViewer.relativeCustomUrl":".vscode",
+    // show type default:'showAll'
+    "SnippetViewer.showType":"showAll"
     // groupByType default:'plugins'
     "SnippetViewer.groupByType":"plugins"
     // control the visibility of the 'targetToFile' button default:false
