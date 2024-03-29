@@ -7,6 +7,7 @@ import {
   CompletionItem,
   CompletionItemKind,
   Disposable,
+  EventEmitter,
   ExtensionContext,
   extensions,
   languages,
@@ -26,15 +27,11 @@ import { TreeItemData } from "../models/TreeItemData";
 import { TreeItemMergeData } from "../models/TreeItemMergeData";
 import { FileService } from "../service/FileService";
 import { TreeItemNode } from "./TreeItemNode";
-import { EventEmitter } from "events";
 
-export class TreeViewProvider
-  extends EventEmitter
-  implements TreeDataProvider<TreeItemNode>
-{
-  private _onDidChangeTreeData: vscode.EventEmitter<
+export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
+  private _onDidChangeTreeData: EventEmitter<
     TreeItemNode | undefined | null | void
-  > = new vscode.EventEmitter<TreeItemNode | undefined | null | void>();
+  > = new EventEmitter<TreeItemNode | undefined | null | void>();
   private context!: ExtensionContext;
   private originTreeList: TreeItemData[] = [];
   private treeList: TreeItemData[] = [];
@@ -49,12 +46,6 @@ export class TreeViewProvider
   private get languageExpandStatusMap(): {
     [key: string]: TreeItemCollapsibleState;
   } {
-    console.log(
-      this.currentLanguage
-        ? this.expandStatusMap[this.currentLanguage] || {}
-        : {}
-    );
-
     return this.currentLanguage
       ? this.expandStatusMap[this.currentLanguage] || {}
       : {};
@@ -364,9 +355,6 @@ export class TreeViewProvider
     if (this.currentLanguage !== language) {
       this.currentLanguage = language;
       this.sortList();
-      // this.treeList.forEach((item) => {
-      //   this.emit("refreshNode", item);
-      // });
     }
   }
 
@@ -375,10 +363,6 @@ export class TreeViewProvider
     this._onDidChangeTreeData.event;
 
   getTreeItem(element: TreeItemNode): TreeItem | Thenable<TreeItem> {
-    return element;
-  }
-
-  getParent(element: TreeItemNode): vscode.ProviderResult<TreeItemNode> {
     return element;
   }
 
@@ -477,14 +461,8 @@ export class TreeViewProvider
    * 保存展开状态
    * @param {string} key
    * @param {TreeItemCollapsibleState} value
-   * @return {*}
    */
   setExpandStatus(key: string, value: TreeItemCollapsibleState): void {
-    console.log(
-      this.environment.showType === ShowType.followEditor &&
-        this.currentLanguage
-    );
-
     if (
       this.environment.showType === ShowType.followEditor &&
       this.currentLanguage
@@ -498,6 +476,10 @@ export class TreeViewProvider
       }
     }
   }
+  /**
+   * 清除展开状态
+   * @param {string} key
+   */
   clearExpandStatus(key: string): void {
     if (
       this.environment.showType === ShowType.followEditor &&

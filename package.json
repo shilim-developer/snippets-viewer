@@ -151,7 +151,7 @@
         },
         "SnippetViewer.showType": {
           "type": "string",
-          "default": "followEditor",
+          "default": "showAll",
           "enum": [
             "showAll",
             "followEditor"
@@ -181,7 +181,6 @@
     "@types/mocha": "^9.0.0",
     "@types/node": "14.x",
     "@types/prettier": "^2.6.3",
-    "@types/uuid": "^9",
     "@types/vscode": "^1.63.0",
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
@@ -192,7 +191,6 @@
     "typescript": "^4.4.4"
   },
   "dependencies": {
-    "json5": "^2.2.1",
-    "uuid": "^9.0.1"
+    "json5": "^2.2.1"
   }
 }

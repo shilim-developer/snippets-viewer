@@ -4,7 +4,9 @@ import { TreeItemData } from "../models/TreeItemData";
 export class TreeItemNode extends TreeItem {
   constructor(
     public readonly treeNodeData: TreeItemData,
-    expandStatusMap: { [key: string]: TreeItemCollapsibleState }
+    expandStatusMap: {
+      [key: string]: TreeItemCollapsibleState;
+    }
   ) {
     super(
       treeNodeData.name,
