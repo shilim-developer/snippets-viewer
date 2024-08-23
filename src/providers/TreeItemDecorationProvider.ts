@@ -10,13 +10,14 @@ import {
 export class TreeItemDecorationProvider implements FileDecorationProvider {
   onDidChangeFileDecorations?: Event<Uri | Uri[] | undefined> | undefined;
   provideFileDecoration(uri: Uri): ProviderResult<FileDecoration> {
-    if (uri.authority === "false") {
+    if (uri.scheme === "snippets-viewer" && uri.authority === "true") {
+      return {
+        color: new ThemeColor("disabledForeground"),
+        tooltip: "disabled",
+      };
+    } else {
       return;
     }
-    return {
-      color: new ThemeColor("disabledForeground"),
-      tooltip: "disabled",
-    };
   }
 }
 

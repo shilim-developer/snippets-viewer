@@ -25,7 +25,7 @@ export class TreeItemNode extends TreeItem {
       this.contextValue = "code";
     } else {
       this.resourceUri = Uri.from({
-        scheme: "shilim",
+        scheme: "snippets-viewer",
         authority: new String(disabled).toString(),
         path: `/${icon}`,
       });
