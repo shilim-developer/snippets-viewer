@@ -2,7 +2,7 @@
   "name": "vscode-snippets-viewer",
   "displayName": "Snippets Viewer",
   "description": "Extension snippets and custom snippets viewer",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "publisher": "shilim",
   "license": "MIT",
   "engines": {

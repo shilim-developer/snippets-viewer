@@ -1,3 +1,12 @@
+## [0.0.5](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.4...v0.0.5) (2024-08-23)
+
+
+### 🐞 Bug Fixed
+
+*  TreeItemDecorationProvider will overwrite the GitDecorationProvider, closes [#6](https://github.com/shilim-developer/snippets-viewer/issues/6) ([38e2dbd](https://github.com/shilim-developer/snippets-viewer/commit/38e2dbd91b830a48ee3709cf64ffe694bdb70580)) by shilim 1251314045@qq.com
+
+
+
 ## [0.0.4](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.3...v0.0.4) (2024-03-29)
 
 
@@ -9,6 +18,7 @@
 ### 📘 Documents
 
 *  change readme and version ([9a1dfb3](https://github.com/shilim-developer/snippets-viewer/commit/9a1dfb3a3b4ded25c059efc2d9ec88bfae39451d)) by shilim 1251314045@qq.com
+*  release 0.0.4, closes [#3](https://github.com/shilim-developer/snippets-viewer/issues/3),[#4](https://github.com/shilim-developer/snippets-viewer/issues/4) ([04daadd](https://github.com/shilim-developer/snippets-viewer/commit/04daadddf21433286f4a751d0bf07793986fa006)) by shilim 1251314045@qq.com
 
 ### wip
 
