@@ -51,6 +51,10 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
       : {};
   }
 
+  // double click
+  private lastSelectedBody: string | null = null;
+  private lastSelectedAt = Date.now();
+
   /**
    * 初始化
    * @param {ExtensionContext} context
@@ -497,7 +501,25 @@ export class TreeViewProvider implements TreeDataProvider<TreeItemNode> {
   public handleItemClick(body: string): void {
     const editor = window.activeTextEditor;
     if (editor) {
-      editor.insertSnippet(new SnippetString(body));
+      // one click
+      if (this.environment.insertTrigger === "oneClick") {
+        editor.insertSnippet(new SnippetString(body));
+        return;
+      }
+      // double click
+      const now = Date.now();
+      const isSameItem = body === this.lastSelectedBody;
+      const isWithinShortTime = now - this.lastSelectedAt < 500;
+      if (isSameItem && isWithinShortTime) {
+        editor.insertSnippet(new SnippetString(body));
+        // reset state
+        this.lastSelectedBody = null;
+        this.lastSelectedAt = now;
+      } else {
+        // set new state
+        this.lastSelectedBody = body;
+        this.lastSelectedAt = now;
+      }
     }
   }
 

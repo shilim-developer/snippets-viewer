@@ -78,3 +78,8 @@ config.json template
 When SnippetViewer.showTargetCodeBtn is True, you can get a button to open the snippets file.
 
 ![targetToFile](./img/targetToFile.gif)
+
+#### Insert Trigger
+You can choose how to trigger the insertion of code.
+
+![targetToFile](./img/insetTrigger.gif)

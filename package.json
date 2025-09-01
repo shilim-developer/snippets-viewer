@@ -162,6 +162,15 @@
           "type": "boolean",
           "default": false,
           "description": "control the visibility of the 'targetToFile' button"
+        },
+        "SnippetViewer.insertTrigger": {
+          "type": "string",
+          "default": "oneClick",
+          "enum": [
+            "oneClick",
+            "doubleClick"
+          ],
+          "description": "control the behavior of inserting code"
         }
       }
     }

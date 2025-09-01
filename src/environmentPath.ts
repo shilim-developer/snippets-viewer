@@ -51,6 +51,10 @@ export class Environment {
     return this.customConfig.get<boolean>("showTargetCodeBtn") || false;
   }
 
+  public get insertTrigger(): string {
+    return this.customConfig.get<string>("insertTrigger") || "oneClick";
+  }
+
   constructor(context: vscode.ExtensionContext) {
     this.isPortable = !!process.env.VSCODE_PORTABLE;
     if (!this.isPortable) {
