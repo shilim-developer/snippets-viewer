@@ -1,9 +1,22 @@
+## [0.0.6](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.5...v0.0.6) (2025-09-02)
+
+
+### ✨ Features
+
+*  add Insert Trigger ([fcb298d](https://github.com/shilim-developer/snippets-viewer/commit/fcb298dddd60154766a68377303bc33f16ea4999)) by shilim 1251314045@qq.com
+
+
+
 ## [0.0.5](https://github.com/shilim-developer/snippets-viewer/compare/v0.0.4...v0.0.5) (2024-08-23)
 
 
 ### 🐞 Bug Fixed
 
 *  TreeItemDecorationProvider will overwrite the GitDecorationProvider, closes [#6](https://github.com/shilim-developer/snippets-viewer/issues/6) ([38e2dbd](https://github.com/shilim-developer/snippets-viewer/commit/38e2dbd91b830a48ee3709cf64ffe694bdb70580)) by shilim 1251314045@qq.com
+
+### 📘 Documents
+
+*  release v0.0.5 ([7f259d4](https://github.com/shilim-developer/snippets-viewer/commit/7f259d4922d3e38ae84a599031a5acef659e2113)) by shilim 1251314045@qq.com
 
 
 
